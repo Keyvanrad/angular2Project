@@ -17,7 +17,7 @@ export class MoviesComponent {
         this._mvsService.getRottenMovies().subscribe(
             data => this.tomatoMovies = JSON.stringify(data),
             error => alert(error),
-            () => console.log(this.tomatoMovies)
+            () => console.log("Finished")
         );
     }
 }
