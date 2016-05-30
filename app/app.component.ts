@@ -7,6 +7,8 @@ import { MoviesComponent } from './movies.component';
 import { HeroDetailComponent } from './hero-detail.component';
 import { HeroService } from './hero.service';
 import { MoviesService } from "./movies.service";
+import { WeatherService } from "./weather.service";
+import { WeatherComponent } from "./weather.component";
 
 @Component({
   selector: 'my-app',
@@ -18,6 +20,7 @@ import { MoviesService } from "./movies.service";
       <a [routerLink]="['Dashboard']">Dashboard</a>
       <a [routerLink]="['Heroes']">Heroes</a>
       <a [routerLink]="['Movies']">Movies</a>
+      <a [routerLink]="['Weather']">Weather</a>
     </nav>
     <router-outlet></router-outlet>
   `,
@@ -26,7 +29,8 @@ import { MoviesService } from "./movies.service";
   providers: [
     ROUTER_PROVIDERS,
     HeroService,
-    MoviesService
+    MoviesService,
+    WeatherService
   ]
 })
 @RouteConfig([
@@ -50,6 +54,11 @@ import { MoviesService } from "./movies.service";
     path: '/movies',
     name: 'Movies',
     component: MoviesComponent
+  },
+  {
+    path: '/weather',
+    name: 'Weather',
+    component: WeatherComponent
   }
 ])
 export class AppComponent {

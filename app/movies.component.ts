@@ -3,7 +3,11 @@ import {MoviesService} from "./movies.service";
 
 @Component({
     selector: 'movies',
-    templateUrl: 'app/movies.component.html',
+    template: `
+        <title>Movies</title>
+        <button style="margin-top: 40px" (click)="getTomatoMovies()">Get Rotten Data</button>
+        <p>{{tomatoMovies}}</p>
+    `,
     providers: [MoviesService]
 })
 
