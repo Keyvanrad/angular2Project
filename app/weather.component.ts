@@ -6,7 +6,7 @@ import {WeatherService} from "./weather.service";
     template: `
         <title>Weather</title>
         <button style="margin-top: 40px" (click)="parseObject()">Get Weather Info</button>
-        <p id='city'>click here...</p>
+        <p id="ct">click here...</p>
     `,
     providers: [WeatherService]
 })
@@ -28,6 +28,6 @@ export class WeatherComponent {
 
     parseObject() {
         this.result = JSON.parse(this.torontoWeather);
-        document.getElementById("city").innerHTML = this.result.city.name;
+        document.getElementById("ct").innerHTML = this.result.city.name;
     }
 }
