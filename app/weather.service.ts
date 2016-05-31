@@ -8,7 +8,7 @@ export class WeatherService{
     constructor (private _http: Http) {}
 
     getTorontoWeather () {
-        return this._http.get('http://api.openweathermap.org/data/2.5/forecast?q=Toronto,us&mode=json&appid=1f58e97dac0c67d6801dfb565e71b0f0')
+        return this._http.get('http://api.openweathermap.org/data/2.5/forecast?q=Toronto,ca&mode=json&appid=1f58e97dac0c67d6801dfb565e71b0f0')
             .map(res => res.json());
 
     }

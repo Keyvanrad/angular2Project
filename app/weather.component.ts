@@ -5,8 +5,8 @@ import {WeatherService} from "./weather.service";
     selector: 'weather',
     template: `
         <title>Weather</title>
-        <button style="margin-top: 40px" (click)="getTorontoWeather()">Get Weather Info</button>
-        <p>{{torontoWeather}}</p>
+        <button style="margin-top: 40px" (click)="parseObject()">Get Weather Info</button>
+        <p id='city'>click here...</p>
     `,
     providers: [WeatherService]
 })
@@ -14,14 +14,20 @@ import {WeatherService} from "./weather.service";
 export class WeatherComponent {
 
     torontoWeather: string;
+    result: {};
 
     constructor(private _mvsService: WeatherService){}
 
-    getTorontoWeather() {
+    ngOnInit () {
         this._mvsService.getTorontoWeather().subscribe(
             data => this.torontoWeather = JSON.stringify(data),
             error => alert(error),
             () => console.log("Finished")
         );
+    }
+
+    parseObject() {
+        this.result = JSON.parse(this.torontoWeather);
+        document.getElementById("city").innerHTML = this.result.city.name;
     }
 }
