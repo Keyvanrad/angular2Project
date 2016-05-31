@@ -1,4 +1,4 @@
-# angular2project
+# Running this Angular 2 Application
 This is my first project in angular2 to learn more about the framework and have fun with loose coupling!
 
 1. Download the application source code
