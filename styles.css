@@ -136,14 +136,18 @@ nav a.router-link-active {
   border-radius: 4px 0 0 4px;
 }
 
+input {
+    height: 2em;
+    font-size: 1em;
+    padding-left: .4em;
+}
+
+input.ng-invalid.ng-dirty {
+    background-color: #ffe4d1;
+}
+
 /* everywhere else */
 * { 
   font-family: Arial, Helvetica, sans-serif; 
 }
 
-
-/*
-Copyright 2016 Google Inc. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/
