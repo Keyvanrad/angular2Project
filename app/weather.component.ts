@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import {WeatherService} from "./weather.service";
+import { FormBuilder, ControlGroup, Validators} from '@angular/common';
+import { WeatherService } from "./weather.service";
 
 @Component({
     selector: 'weather',
     template: `
-        <title>Weather</title>
+        <title xmlns="http://www.w3.org/1999/html">Weather</title>
         <button style="margin-top: 40px" (click)="parseObject()">Get Weather Info</button>
-        <p id="ct">click here...</p>
+        <p id="ct">{{result?.city?.name}}</p>
+        <form [ngFormModel]="cityForm" (submit)="addCity($event)">
+          <input [ngFormControl]="cityForm.controls.name" placeholder="enter city" [(ngModel)]="aaa"/>
+          <button type="submit">Add</button>
+        </form>
     `,
     providers: [WeatherService]
 })
@@ -15,8 +20,13 @@ export class WeatherComponent {
 
     torontoWeather: string;
     result: {};
+    cityForm: ControlGroup;
 
-    constructor(private _mvsService: WeatherService){}
+    constructor(private _mvsService: WeatherService, private _fb: FormBuilder){
+        this.cityForm = _fb.group({
+           name: ['', Validators.required]
+        });
+    }
 
     ngOnInit () {
         this._mvsService.getTorontoWeather().subscribe(
@@ -28,6 +38,10 @@ export class WeatherComponent {
 
     parseObject() {
         this.result = JSON.parse(this.torontoWeather);
-        document.getElementById("ct").innerHTML = this.result.city.name;
+    }
+
+    addCity(event) {
+        console.log("---Submit---");
+        event.preventDefault();
     }
 }
