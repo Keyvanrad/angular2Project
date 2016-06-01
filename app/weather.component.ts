@@ -9,8 +9,9 @@ import { WeatherService } from "./weather.service";
         <button style="margin-top: 40px" (click)="parseObject()">Get Weather Info</button>
         <p id="ct">{{result?.city?.name}}</p>
         <form [ngFormModel]="cityForm" (submit)="addCity($event)">
-          <input [ngFormControl]="cityForm.controls.name" placeholder="enter city" [(ngModel)]="aaa"/>
-          <button type="submit">Add</button>
+          <label for="name">City</label>
+          <input [ngFormControl]="cityForm.controls.name" placeholder="enter city"/>
+          <button type="submit" [disabled]="!cityForm.valid">Add</button>
         </form>
     `,
     providers: [WeatherService]
@@ -24,7 +25,7 @@ export class WeatherComponent {
 
     constructor(private _mvsService: WeatherService, private _fb: FormBuilder){
         this.cityForm = _fb.group({
-           name: ['', Validators.required]
+           'name': ['', Validators.required]
         });
     }
 
@@ -41,7 +42,7 @@ export class WeatherComponent {
     }
 
     addCity(event) {
-        console.log("---Submit---");
+        console.log("---Submit---"+this.cityForm.value.name);
         event.preventDefault();
     }
 }
