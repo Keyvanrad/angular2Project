@@ -12,4 +12,10 @@ export class WeatherService{
             .map(res => res.json());
 
     }
+
+    insertCity(formData: any) {
+        console.log("---->> Got Form Data"+JSON.stringify(formData));
+        //TODO insert form data into MySQL db
+        //return this._http.post('rotten-movies.php', body, options);
+    }
 }

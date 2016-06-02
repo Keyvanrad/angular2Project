@@ -140,6 +140,9 @@ input {
     height: 2em;
     font-size: 1em;
     padding-left: .4em;
+    margin: .4em;
+    border-radius: 4px;
+    border: 1px solid #ccc;
 }
 
 input.ng-invalid.ng-dirty {
