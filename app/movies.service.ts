@@ -7,8 +7,8 @@ import 'rxjs/add/operator/map';
 export class MoviesService{
     constructor (private _http: Http) {}
 
-    getRottenMovies () {
-        return this._http.get('http://www.tordnet.com/angular/php/rotten-movies.php', true)
+    getMovies (lt: string) {
+        return this._http.get('http://www.tordnet.com/angular/php/rotten-movies.php?listType='+lt, true)
             .map(res => res.json());
     }
 }

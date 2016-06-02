@@ -5,21 +5,23 @@ import {MoviesService} from "./movies.service";
     selector: 'movies',
     template: `
         <title>Movies</title>
-        <button style="margin-top: 40px" (click)="getTomatoMovies()">Get Rotten Data</button>
-        <p>{{tomatoMovies}}</p>
+        <button style="margin-top: 40px" (click)="getTomatoMovies('opening')">Opening</button>
+        <button style="margin-top: 40px" (click)="getTomatoMovies('boxoffice')">Canada Box Office</button>
+        <button style="margin-top: 40px" (click)="getTomatoMovies('upcoming')">Upcoming!</button>
+        <p>{{moviesResult}}</p>
     `,
     providers: [MoviesService]
 })
 
 export class MoviesComponent {
 
-    tomatoMovies: string;
+    moviesResult: string;
 
     constructor(private _mvsService: MoviesService){}
 
-    getTomatoMovies() {
-        this._mvsService.getRottenMovies().subscribe(
-            data => this.tomatoMovies = JSON.stringify(data),
+    getTomatoMovies(queryType: string) {
+        this._mvsService.getMovies(queryType).subscribe(
+            data => this.moviesResult = JSON.stringify(data),
             error => alert(error),
             () => console.log("Finished")
         );
