@@ -6,14 +6,10 @@ import {MoviesService} from "./movies.service";
     template: `
         <title>Movies</title>
         <form>
-            <input type="radio" name="category" class="radio" (click)="getTomatoMovies('opening')" checked> Opening
-            <input type="radio" name="category" (click)="getTomatoMovies('boxoffice')"> Canada Box Office
-            <input type="radio" name="category" (click)="getTomatoMovies('upcoming')"> Upcoming!
+            <input type="radio" name="category" id="opening" (click)="getTomatoMovies('opening')" checked> Opening
+            <input type="radio" name="category" id="boxoffice" (click)="getTomatoMovies('boxoffice')"> Canada Box Office
+            <input type="radio" name="category" id="upcoming" (click)="getTomatoMovies('upcoming')"> Upcoming!
         </form>
-        <button style="margin-top: 40px" (click)="getTomatoMovies('opening')">Opening</button>
-        <button style="margin-top: 40px" (click)="getTomatoMovies('boxoffice')">Canada Box Office</button>
-        <button style="margin-top: 40px" (click)="getTomatoMovies('upcoming')">Upcoming!</button>
-        <!--<p>{{moviesResultList ? moviesResultList[0].alternate_ids.imdb : ""}}</p>-->
         <p>{{selectedMovie?.title}}</p>
     `,
     providers: [MoviesService]
@@ -22,17 +18,34 @@ import {MoviesService} from "./movies.service";
 export class MoviesComponent {
 
     moviesResult: string;
-    //moviesResultList: {};
+    category: string;
+    selectedMovieId: number;
     selectedMovie: {};
 
     constructor(private _mvsService: MoviesService){}
 
+    ngOnInit() {
+
+        let storedCategory = sessionStorage['selectedCategory'];
+        if (storedCategory) {
+            this.getTomatoMovies(storedCategory);
+            document.getElementById(storedCategory).checked = true;
+        } else
+        {
+            this.getTomatoMovies('opening');
+        }
+
+    }
+
     getTomatoMovies(queryType: string) {
+        sessionStorage['selectedCategory'] = queryType;
         this._mvsService.getMovies(queryType).subscribe(
             data => {
                 this.moviesResult = JSON.stringify(data);
                 //this.moviesResultList = JSON.parse(this.moviesResult).movies;
                 this.selectedMovie = JSON.parse(this.moviesResult).movies[0];
+                this.selectedMovieId = this.selectedMovie['alternate_ids'].imdb;
+                console.log("-----ID-----"+this.selectedMovieId);
            },
             error => alert(error),
             () => console.log("Finished")
