@@ -136,6 +136,26 @@ nav a.router-link-active {
   border-radius: 4px 0 0 4px;
 }
 
+/* Keyvan's Work */
+
+.clickable {
+  cursor: pointer;
+}
+.clickable:focus {
+  outline: 0;
+}
+.clickable:hover, .clickable.focused {
+  background-color: #9ad3fd !important;
+}
+
+.selected .link, .clickable:active .link {
+  color: #ffffff;
+}
+.selected, .clickable:active, .selected:active, .selected:hover, .selected:focus {
+  color: #ffffff !important;
+  background-color: #007db8 !important;
+}
+
 input {
     height: 2em;
     font-size: 1em;
@@ -153,6 +173,67 @@ input[type=radio   ]:not(old){
   width   : 20px;
   margin  : 0;
   padding : 0;
+}
+
+/* TABLE */
+table {
+  margin: 0 0 2em 0;
+  width: 100%;
+}
+
+table tbody tr {
+  border: solid 1px #c9c9c9;
+  border-left: 0;
+  border-right: 0;
+}
+
+table tbody tr:nth-child(2n + 1) {
+  background-color: rgba(144, 144, 144, 0.075);
+}
+
+table td {
+  padding: 0.75em 0.75em;
+}
+
+table th {
+  font-size: 0.9em;
+  font-weight: 900;
+  padding: 0 0.75em 0.75em 0.75em;
+  text-align: left;
+}
+
+table thead {
+  border-bottom: solid 2px #c9c9c9;
+}
+
+table tfoot {
+  border-top: solid 2px #c9c9c9;
+}
+
+table.alt {
+  border-collapse: separate;
+}
+
+table.alt tbody tr td {
+  border: solid 1px #c9c9c9;
+  border-left-width: 0;
+  border-top-width: 0;
+}
+
+table.alt tbody tr td:first-child {
+  border-left-width: 1px;
+}
+
+table.alt tbody tr:first-child td {
+  border-top-width: 1px;
+}
+
+table.alt thead {
+  border-bottom: 0;
+}
+
+table.alt tfoot {
+  border-top: 0;
 }
 
 /* everywhere else */

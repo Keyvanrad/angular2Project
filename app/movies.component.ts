@@ -11,6 +11,18 @@ import {MoviesService} from "./movies.service";
             <input type="radio" name="category" id="upcoming" (click)="getTomatoMovies('upcoming')"> Upcoming!
         </form>
         <p>{{selectedMovie?.title}}</p>
+        <table *ngIf="!error">
+        <thead>
+        <tr>
+        <th>Rotten</th><th>Imdb</th><th>Movie</th><th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let m of moviesResultObj" class="clickable" (click)="selectMovie(m)">
+        <td>{{m?.ratings.critics_score}}</td><td>{{m?.ratings.audience_score}}</td><td>{{m?.title}}</td>
+        </tr>
+        </tbody>
+        </table>
     `,
     providers: [MoviesService]
 })
@@ -18,6 +30,7 @@ import {MoviesService} from "./movies.service";
 export class MoviesComponent {
 
     moviesResult: string;
+    moviesResultObj: {};
     category: string;
     selectedMovieId: number;
     selectedMovie: {};
@@ -29,7 +42,7 @@ export class MoviesComponent {
         let storedCategory = sessionStorage['selectedCategory'];
         if (storedCategory) {
             this.getTomatoMovies(storedCategory);
-            document.getElementById(storedCategory).checked = true;
+            document.getElementById(storedCategory)['checked'] = true;
         } else
         {
             this.getTomatoMovies('opening');
@@ -42,13 +55,16 @@ export class MoviesComponent {
         this._mvsService.getMovies(queryType).subscribe(
             data => {
                 this.moviesResult = JSON.stringify(data);
-                //this.moviesResultList = JSON.parse(this.moviesResult).movies;
+                this.moviesResultObj = JSON.parse(this.moviesResult).movies;
                 this.selectedMovie = JSON.parse(this.moviesResult).movies[0];
                 this.selectedMovieId = this.selectedMovie['alternate_ids'].imdb;
-                console.log("-----ID-----"+this.selectedMovieId);
            },
             error => alert(error),
             () => console.log("Finished")
         );
+    }
+
+    selectMovie(m: any) {
+        console.log("--------MOVIE SELECTED------"+ m.title);
     }
 }
