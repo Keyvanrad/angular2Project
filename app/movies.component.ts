@@ -18,7 +18,7 @@ import {MoviesService} from "./movies.service";
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let m of moviesResultObj" class="clickable" (click)="selectMovie(m)">
+        <tr *ngFor="let m of moviesResultObj" class="clickable" [class.selected]="m.id === selectedMovieId" (click)="selectMovie(m)">
         <td>{{m?.ratings.critics_score}}</td><td>{{m?.ratings.audience_score}}</td><td>{{m?.title}}</td>
         </tr>
         </tbody>
@@ -41,10 +41,12 @@ export class MoviesComponent {
 
         let storedCategory = sessionStorage['selectedCategory'];
         if (storedCategory) {
+            this.category = storedCategory;
             this.getTomatoMovies(storedCategory);
             document.getElementById(storedCategory)['checked'] = true;
         } else
         {
+            this.category = 'opening';
             this.getTomatoMovies('opening');
         }
 
@@ -52,12 +54,22 @@ export class MoviesComponent {
 
     getTomatoMovies(queryType: string) {
         sessionStorage['selectedCategory'] = queryType;
+        this.category = queryType;
         this._mvsService.getMovies(queryType).subscribe(
             data => {
                 this.moviesResult = JSON.stringify(data);
                 this.moviesResultObj = JSON.parse(this.moviesResult).movies;
-                this.selectedMovie = JSON.parse(this.moviesResult).movies[0];
-                this.selectedMovieId = this.selectedMovie['alternate_ids'].imdb;
+
+                let storedMovieId = sessionStorage['selectedMovieId'+queryType];
+                if (storedMovieId) {
+                    this.selectedMovieId = storedMovieId;
+                    //TODO get the movie
+                } else {
+
+                    this.selectedMovie = JSON.parse(this.moviesResult).movies[0];
+                    this.selectedMovieId = this.selectedMovie['id'];
+                    sessionStorage['selectedMovieId'+queryType] = this.selectedMovieId;
+                }
            },
             error => alert(error),
             () => console.log("Finished")
@@ -65,6 +77,9 @@ export class MoviesComponent {
     }
 
     selectMovie(m: any) {
-        console.log("--------MOVIE SELECTED------"+ m.title);
+        console.log("--------MOVIE SELECTED------"+ m.id);
+        sessionStorage['selectedMovieId'+this.category] = m.id;
+        this.selectedMovieId = m.id;
+        this.selectedMovie = m;
     }
 }
