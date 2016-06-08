@@ -63,7 +63,13 @@ export class MoviesComponent {
                 let storedMovieId = sessionStorage['selectedMovieId'+queryType];
                 if (storedMovieId) {
                     this.selectedMovieId = storedMovieId;
-                    //TODO get the movie
+                    let i = 0;
+                    for (i ; this.moviesResultObj[i] ; i++) {
+                        if ( this.moviesResultObj[i]['id'] === storedMovieId ) {
+                            this.selectedMovie = this.moviesResultObj[i];
+                            break;
+                        }
+                    }
                 } else {
 
                     this.selectedMovie = JSON.parse(this.moviesResult).movies[0];
@@ -77,7 +83,6 @@ export class MoviesComponent {
     }
 
     selectMovie(m: any) {
-        console.log("--------MOVIE SELECTED------"+ m.id);
         sessionStorage['selectedMovieId'+this.category] = m.id;
         this.selectedMovieId = m.id;
         this.selectedMovie = m;
