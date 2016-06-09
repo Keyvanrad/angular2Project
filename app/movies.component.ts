@@ -11,7 +11,7 @@ import {MoviesService} from "./movies.service";
             <input type="radio" name="category" id="upcoming" (click)="getTomatoMovies('upcoming')"> Upcoming!
         </form>
         <p>{{selectedMovie?.title}}</p>
-        <img src="{{posterUrl}}">
+        <img src="{{posterUrl}}" style="width:250px;height:371px;">
         <table *ngIf="!error">
         <thead>
         <tr>
@@ -96,10 +96,11 @@ export class MoviesComponent {
 
     getSelectedMoviePoster (movie: any) {
         let id: string;
-        let isTitle = false;
+        let isTitle = 'false';
         if (movie['alternate_ids'] == undefined) {
-            isTitle = true;
+            isTitle = 'true';
             id = this.selectedMovie['title'];
+            id = id.split(' ').join('%20');
         } else {
             id = this.selectedMovie['alternate_ids']['imdb'];
         }
