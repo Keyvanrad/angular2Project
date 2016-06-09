@@ -11,4 +11,11 @@ export class MoviesService{
         return this._http.get('http://www.tordnet.com/angular/php/rotten-movies.php?listType='+lt, true)
             .map(res => res.json());
     }
+
+    getPoster (id: string, isTitle: Boolean) {
+        let preUrl = "http://www.omdbapi.com/?";
+        isTitle ? preUrl = preUrl+"t=" : preUrl = preUrl+"i=tt";
+        return this._http.get(preUrl+id, true)
+            .map(res => res.json());
+    }
 }

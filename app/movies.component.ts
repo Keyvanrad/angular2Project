@@ -11,6 +11,7 @@ import {MoviesService} from "./movies.service";
             <input type="radio" name="category" id="upcoming" (click)="getTomatoMovies('upcoming')"> Upcoming!
         </form>
         <p>{{selectedMovie?.title}}</p>
+        <img src="{{posterUrl}}">
         <table *ngIf="!error">
         <thead>
         <tr>
@@ -34,6 +35,9 @@ export class MoviesComponent {
     category: string;
     selectedMovieId: number;
     selectedMovie: {};
+    selectedMoviePosterJson: string;
+    posterJson: {};
+    posterUrl: string;
 
     constructor(private _mvsService: MoviesService){}
 
@@ -76,6 +80,7 @@ export class MoviesComponent {
                     this.selectedMovieId = this.selectedMovie['id'];
                     sessionStorage['selectedMovieId'+queryType] = this.selectedMovieId;
                 }
+                this.getSelectedMoviePoster(this.selectedMovie);
            },
             error => alert(error),
             () => console.log("Finished")
@@ -86,5 +91,26 @@ export class MoviesComponent {
         sessionStorage['selectedMovieId'+this.category] = m.id;
         this.selectedMovieId = m.id;
         this.selectedMovie = m;
+        this.getSelectedMoviePoster(m);
+    }
+
+    getSelectedMoviePoster (movie: any) {
+        let id: string;
+        let isTitle = false;
+        if (movie['alternate_ids'] == undefined) {
+            isTitle = true;
+            id = this.selectedMovie['title'];
+        } else {
+            id = this.selectedMovie['alternate_ids']['imdb'];
+        }
+        this._mvsService.getPoster(id, isTitle).subscribe(
+            data => {
+                this.selectedMoviePosterJson = JSON.stringify(data);
+                this.posterJson = JSON.parse(this.selectedMoviePosterJson);
+                this.posterUrl = this.posterJson['Poster'];
+            },
+            error => alert(error),
+            () => console.log("Got Poster!")
+        );
     }
 }
