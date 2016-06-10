@@ -13,9 +13,8 @@ export class MoviesService{
     }
 
     getPosterNew (id: string, isTitle: string) {
-        console.log('----http://www.tordnet.com/angular/php/posters.php?movieId='+id+'&isMovieTitle='+isTitle);
-        return this._http.get('http://www.tordnet.com/angular/php/posters.php?movieId='+id+'&isMovieTitle='+isTitle, true)
-            .map(res => res.json());
+        return this._http.get('http://www.tordnet.com/angular/php/posters.php?movieId='+id+'&isMovieTitle='+isTitle, true);
+            //.map(res => res.json());
     }
 
     getPoster (id: string, isTitle: string) {

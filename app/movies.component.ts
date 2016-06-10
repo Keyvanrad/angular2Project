@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MoviesService} from "./movies.service";
+import {type} from "os";
 
 @Component({
     selector: 'movies',
@@ -10,8 +11,10 @@ import {MoviesService} from "./movies.service";
             <input type="radio" name="category" id="boxoffice" (click)="getTomatoMovies('boxoffice')"> Canada Box Office
             <input type="radio" name="category" id="upcoming" (click)="getTomatoMovies('upcoming')"> Upcoming!
         </form>
-        <p>{{selectedMovie?.title}}</p>
-        <img src="{{posterUrl}}" style="width:250px;height:371px;">
+        <h3>{{selectedMovie?.title}}</h3>
+        <div>
+        <img id="poster" src="{{posterUrl}}" style="width:200px; height:297px;"><span style="float: right">{{selectedMovie?.synopsis}}</span>
+        </div>
         <table *ngIf="!error">
         <thead>
         <tr>
@@ -38,6 +41,7 @@ export class MoviesComponent {
     selectedMoviePosterJson: string;
     posterJson: {};
     posterUrl: string;
+    thePoster: any;
 
     constructor(private _mvsService: MoviesService){}
 
@@ -100,18 +104,10 @@ export class MoviesComponent {
         if (movie['alternate_ids'] == undefined) {
             isTitle = 'true';
             id = this.selectedMovie['title'];
-            id = id.split(' ').join('%20');
         } else {
+            isTitle = 'false';
             id = this.selectedMovie['alternate_ids']['imdb'];
         }
-        this._mvsService.getPoster(id, isTitle).subscribe(
-            data => {
-                this.selectedMoviePosterJson = JSON.stringify(data);
-                this.posterJson = JSON.parse(this.selectedMoviePosterJson);
-                this.posterUrl = this.posterJson['Poster'];
-            },
-            error => alert(error),
-            () => console.log("Got Poster!")
-        );
+        this.posterUrl = "http://www.tordnet.com/angular/php/posters.php?movieId="+id+"&isMovieTitle="+isTitle;
     }
 }
