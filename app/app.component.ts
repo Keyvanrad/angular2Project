@@ -12,32 +12,7 @@ import { WeatherComponent } from "./weather.component";
 
 @Component({
   selector: 'my-app',
-  template: `
-  <link rel="stylesheet" type="text/css" href="/node_modules/semantic-ui/dist/semantic.min.css">
-  <script src="/node_modules/semantic-ui/dist/semantic.min.js"></script>
-  <style>
-  @media screen and (max-width: 400px) {
-    nav {
-      display: none;
-    }
-  }
-  </style>
-  <div style="float: right"><img src="/assets/stackMenuIcon.svg" width="64" height="48"></div>
-  <h2 class="ui header">
-  <img src="/assets/Angular2logo.png">
-      <div class="content">
-        {{title}}
-        <div class="sub header">{{description}}</div>
-      </div>
-  </h2>
-    <nav>
-      <a [routerLink]="['Dashboard']">Dashboard</a>
-      <a [routerLink]="['Heroes']">Heroes</a>
-      <a [routerLink]="['Movies']">Movies</a>
-      <a [routerLink]="['Weather']">Weather</a>
-    </nav>
-    <router-outlet></router-outlet>
-  `,
+  templateUrl: 'app/main.html',
   styleUrls: ['app/app.component.css'],
   directives: [ROUTER_DIRECTIVES],
   providers: [
