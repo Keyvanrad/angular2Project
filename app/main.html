@@ -15,21 +15,30 @@
 </head>
 <body>
 
-<div style="float: right"><img src="/assets/stackMenuIcon.svg" width="64" height="48"></div>
-<h2 class="ui header">
-    <img src="/assets/Angular2logo.png">
-    <div class="content">
-        {{title}}
-        <div class="sub header">{{description}}</div>
+<div class="ui sixteen column grid container" style="margin-top: 10px">
+    <div class="row">
+        <div class="sixteen wide column">
+            <h2 class="ui header">
+                <img src="/assets/Angular2logo.png">
+                <div class="content">
+                    {{title}}
+                    <div class="sub header">{{description}}</div>
+                </div>
+            </h2>
+        </div>
     </div>
-</h2>
-<nav>
-    <a [routerLink]="['Dashboard']">Dashboard</a>
-    <a [routerLink]="['Heroes']">Heroes</a>
-    <a [routerLink]="['Movies']">Movies</a>
-    <a [routerLink]="['Weather']">Weather</a>
-</nav>
-<router-outlet></router-outlet>
+    <div class="row">
+        <nav>
+            <button [routerLink]="['Dashboard']" class="ui button">Dashboard</button>
+            <button [routerLink]="['Heroes']" class="ui button">Heroes</button>
+            <button [routerLink]="['Movies']" class="ui button">Movies</button>
+            <button [routerLink]="['Weather']" class="ui button">Weather</button>
+        </nav>
+    </div>
+    <div class="row">
+        <router-outlet></router-outlet>
+    </div>
+</div>
 
 </body>
 </html>
